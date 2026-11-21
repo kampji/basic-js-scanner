@@ -112,6 +112,20 @@ The console shows a summary, source maps, findings, and endpoints. With `-o out/
 
 Add `--save-js` to also keep a copy of every JS file.
 
+## How it compares
+
+There are plenty of good JavaScript recon tools, and you may already use some of them. basic-js-scanner pulls their main jobs into one Python script with no setup beyond `requests`.
+
+| Tool | Focus | How basic-js-scanner differs |
+|---|---|---|
+| [LinkFinder](https://github.com/GerbenJavado/LinkFinder) | Endpoints and paths in JS files | Also finds secrets, source maps, and DOM sinks, and infers HTTP methods |
+| [SecretFinder](https://github.com/m4ll0k/SecretFinder) | API keys and tokens in JS files | Also maps endpoints, and scans the original source recovered from source maps |
+| [xnLinkFinder](https://github.com/xnl-h4ck3r/xnLinkFinder) | Links and parameters from many input types | Narrower on links, but adds secret and dangerous-code detection |
+| [jsluice](https://github.com/BishopFox/jsluice) | URLs and secrets via AST parsing (Go) | Regex instead of AST: less precise, but no Go toolchain and adds DOM sink checks |
+| [sourcemapper](https://github.com/denandz/sourcemapper) | Rebuilding source trees from `.js.map` files | Finds and blind-probes maps for you, then scans the recovered source |
+
+If you need precise data-flow analysis, use an AST-based tool or manual review alongside this one.
+
 ## Limitations
 
 This is pattern matching over raw source, not a full AST or taint engine. Treat findings as leads for manual review, not confirmed vulnerabilities:
